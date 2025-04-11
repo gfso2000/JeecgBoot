@@ -1,0 +1,53 @@
+front end
+1. 修改.env.production
+    VITE_GLOB_API_URL=/jeecgbootAPI, important used in nginx config
+    VITE_GLOB_DOMAIN_URL=any string, because UI use relative path
+2. pnpm run build
+3. note the dist path: /Users/I325639/a_jeecg/JeecgBoot/jeecgboot-vue3/dist, used in nginx config
+
+back end
+1. change mvn profile to "prod"
+2. mvn Lifecycle->install
+3. java -jar jeecg-system-start-3.5.0.jar
+4. verify: http://localhost:8080/jeecg-boot
+
+nginx, usr/local/etc/nginx/nginx.conf
+    upstream api3.boot.jeecg.com {
+      server 127.0.0.1:8080;
+    }
+
+    server {
+        listen       7377;
+        server_name  localhost;
+        root         /Users/I325639/a_jeecg/JeecgBoot/jeecgboot-vue3/dist;
+
+        location / {
+             # 用于配合 browserHistory使用
+             try_files $uri $uri/ /index.html;
+        }
+
+        location  /jeecgbootAPI/ {
+            proxy_pass         http://api3.boot.jeecg.com/jeecg-boot/;
+            proxy_redirect off;
+            #真实IP获取
+            proxy_set_header  Host             $host;
+            proxy_set_header  X-Real-IP        $remote_addr;
+            set $my_proxy_add_x_forwarded_for $proxy_add_x_forwarded_for;
+            if ($proxy_add_x_forwarded_for ~* "127.0.0.1"){
+               set $my_proxy_add_x_forwarded_for $remote_addr;
+            }
+            proxy_set_header   X-Forwarded-For $my_proxy_add_x_forwarded_for;
+        }
+
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   html;
+        }
+    }
+
+start nginx server:
+    brew services restart nginx
+
+verify:
+http://localhost:7377/
+
