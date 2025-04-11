@@ -1,48 +1,38 @@
 package org.jeecg.modules.demo.jack.controller;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.jeecg.common.api.vo.Result;
+import org.jeecg.common.aspect.annotation.AutoLog;
+import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.query.QueryGenerator;
-import org.jeecg.common.system.query.QueryRuleEnum;
 import org.jeecg.common.util.oConvertUtils;
 import org.jeecg.config.shiro.IgnoreAuth;
 import org.jeecg.modules.demo.jack.entity.JackContact;
 import org.jeecg.modules.demo.jack.service.IJackContactService;
-
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import lombok.extern.slf4j.Slf4j;
-
 import org.jeecg.modules.system.model.TreeSelectModel;
-import org.jeecgframework.poi.excel.ExcelImportUtil;
-import org.jeecgframework.poi.excel.def.NormalExcelConstants;
-import org.jeecgframework.poi.excel.entity.ExportParams;
-import org.jeecgframework.poi.excel.entity.ImportParams;
-import org.jeecgframework.poi.excel.view.JeecgEntityExcelView;
-import org.jeecg.common.system.base.controller.JeecgController;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
-import com.alibaba.fastjson.JSON;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import org.jeecg.common.aspect.annotation.AutoLog;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Arrays;
+import java.util.List;
 
  /**
  * @Description: jack contact
@@ -50,7 +40,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
  * @Date:   2025-03-20
  * @Version: V1.0
  */
-@Api(tags="jack contact")
+@Tag(name="jack contact")
 @RestController
 @RequestMapping("/jack/jackContact")
 @Slf4j
@@ -95,7 +85,7 @@ public class JackContactController extends JeecgController<JackContact, IJackCon
 	 * @return
 	 */
 	//@AutoLog(value = "jack contact-分页列表查询")
-	@ApiOperation(value="jack contact-分页列表查询", notes="jack contact-分页列表查询")
+	@Operation(summary="jack contact-分页列表查询", description="jack contact-分页列表查询")
 	@GetMapping(value = "/list")
 	public Result<IPage<JackContact>> queryPageList(JackContact jackContact,
 								   @RequestParam(name="pageNo", defaultValue="1") Integer pageNo,
@@ -114,7 +104,7 @@ public class JackContactController extends JeecgController<JackContact, IJackCon
 	 * @return
 	 */
 	@AutoLog(value = "jack contact-添加")
-	@ApiOperation(value="jack contact-添加", notes="jack contact-添加")
+	@Operation(summary="jack contact-添加", description="jack contact-添加")
 	@RequiresPermissions("jack:jack_contact:add")
 	@PostMapping(value = "/add")
 	public Result<String> add(@RequestBody JackContact jackContact) {
@@ -129,7 +119,7 @@ public class JackContactController extends JeecgController<JackContact, IJackCon
 	 * @return
 	 */
 	@AutoLog(value = "jack contact-编辑")
-	@ApiOperation(value="jack contact-编辑", notes="jack contact-编辑")
+	@Operation(summary="jack contact-编辑", description="jack contact-编辑")
 	@RequiresPermissions("jack:jack_contact:edit")
 	@RequestMapping(value = "/edit", method = {RequestMethod.PUT,RequestMethod.POST})
 	public Result<String> edit(@RequestBody JackContact jackContact) {
@@ -144,7 +134,7 @@ public class JackContactController extends JeecgController<JackContact, IJackCon
 	 * @return
 	 */
 	@AutoLog(value = "jack contact-通过id删除")
-	@ApiOperation(value="jack contact-通过id删除", notes="jack contact-通过id删除")
+	@Operation(summary="jack contact-通过id删除", description="jack contact-通过id删除")
 	@RequiresPermissions("jack:jack_contact:delete")
 	@DeleteMapping(value = "/delete")
 	public Result<String> delete(@RequestParam(name="id",required=true) String id) {
@@ -159,7 +149,7 @@ public class JackContactController extends JeecgController<JackContact, IJackCon
 	 * @return
 	 */
 	@AutoLog(value = "jack contact-批量删除")
-	@ApiOperation(value="jack contact-批量删除", notes="jack contact-批量删除")
+	@Operation(summary="jack contact-批量删除", description="jack contact-批量删除")
 	@RequiresPermissions("jack:jack_contact:deleteBatch")
 	@DeleteMapping(value = "/deleteBatch")
 	public Result<String> deleteBatch(@RequestParam(name="ids",required=true) String ids) {
@@ -174,7 +164,7 @@ public class JackContactController extends JeecgController<JackContact, IJackCon
 	 * @return
 	 */
 	//@AutoLog(value = "jack contact-通过id查询")
-	@ApiOperation(value="jack contact-通过id查询", notes="jack contact-通过id查询")
+	@Operation(summary="jack contact-通过id查询", description="jack contact-通过id查询")
 	@GetMapping(value = "/queryById")
 	public Result<JackContact> queryById(@RequestParam(name="id",required=true) String id) {
 		JackContact jackContact = jackContactService.getById(id);

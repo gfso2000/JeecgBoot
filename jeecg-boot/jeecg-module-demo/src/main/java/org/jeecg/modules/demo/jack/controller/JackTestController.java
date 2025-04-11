@@ -1,43 +1,32 @@
 package org.jeecg.modules.demo.jack.controller;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import org.jeecg.common.api.vo.Result;
-import org.jeecg.common.system.query.QueryGenerator;
-import org.jeecg.common.system.query.QueryRuleEnum;
-import org.jeecg.common.util.oConvertUtils;
-import org.jeecg.modules.demo.jack.entity.JackTest;
-import org.jeecg.modules.demo.jack.service.IJackTestService;
-
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
-
-import org.jeecgframework.poi.excel.ExcelImportUtil;
-import org.jeecgframework.poi.excel.def.NormalExcelConstants;
-import org.jeecgframework.poi.excel.entity.ExportParams;
-import org.jeecgframework.poi.excel.entity.ImportParams;
-import org.jeecgframework.poi.excel.view.JeecgEntityExcelView;
-import org.jeecg.common.system.base.controller.JeecgController;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.servlet.ModelAndView;
-import com.alibaba.fastjson.JSON;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import org.jeecg.common.aspect.annotation.AutoLog;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.jeecg.common.api.vo.Result;
+import org.jeecg.common.aspect.annotation.AutoLog;
+import org.jeecg.common.system.base.controller.JeecgController;
+import org.jeecg.common.system.query.QueryGenerator;
+import org.jeecg.modules.demo.jack.entity.JackTest;
+import org.jeecg.modules.demo.jack.service.IJackTestService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Arrays;
 
  /**
  * @Description: jack desc
@@ -45,7 +34,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
  * @Date:   2025-03-17
  * @Version: V1.0
  */
-@Api(tags="jack desc")
+@Tag(name="jack desc")
 @RestController
 @RequestMapping("/jack/jackTest")
 @Slf4j
@@ -63,7 +52,7 @@ public class JackTestController extends JeecgController<JackTest, IJackTestServi
 	 * @return
 	 */
 	//@AutoLog(value = "jack desc-分页列表查询")
-	@ApiOperation(value="jack desc-分页列表查询", notes="jack desc-分页列表查询")
+	@Operation(summary="jack desc-分页列表查询", description="jack desc-分页列表查询")
 	@GetMapping(value = "/list")
 	public Result<IPage<JackTest>> queryPageList(JackTest jackTest,
 								   @RequestParam(name="pageNo", defaultValue="1") Integer pageNo,
@@ -82,7 +71,7 @@ public class JackTestController extends JeecgController<JackTest, IJackTestServi
 	 * @return
 	 */
 	@AutoLog(value = "jack desc-添加")
-	@ApiOperation(value="jack desc-添加", notes="jack desc-添加")
+	@Operation(summary="jack desc-添加", description="jack desc-添加")
 	@RequiresPermissions("jack:jack_test:add")
 	@PostMapping(value = "/add")
 	public Result<String> add(@RequestBody JackTest jackTest) {
@@ -97,7 +86,7 @@ public class JackTestController extends JeecgController<JackTest, IJackTestServi
 	 * @return
 	 */
 	@AutoLog(value = "jack desc-编辑")
-	@ApiOperation(value="jack desc-编辑", notes="jack desc-编辑")
+	@Operation(summary="jack desc-编辑", description="jack desc-编辑")
 	@RequiresPermissions("jack:jack_test:edit")
 	@RequestMapping(value = "/edit", method = {RequestMethod.PUT,RequestMethod.POST})
 	public Result<String> edit(@RequestBody JackTest jackTest) {
@@ -112,7 +101,7 @@ public class JackTestController extends JeecgController<JackTest, IJackTestServi
 	 * @return
 	 */
 	@AutoLog(value = "jack desc-通过id删除")
-	@ApiOperation(value="jack desc-通过id删除", notes="jack desc-通过id删除")
+	@Operation(summary="jack desc-通过id删除", description="jack desc-通过id删除")
 	@RequiresPermissions("jack:jack_test:delete")
 	@DeleteMapping(value = "/delete")
 	public Result<String> delete(@RequestParam(name="id",required=true) String id) {
@@ -127,7 +116,7 @@ public class JackTestController extends JeecgController<JackTest, IJackTestServi
 	 * @return
 	 */
 	@AutoLog(value = "jack desc-批量删除")
-	@ApiOperation(value="jack desc-批量删除", notes="jack desc-批量删除")
+	@Operation(summary="jack desc-批量删除", description="jack desc-批量删除")
 	@RequiresPermissions("jack:jack_test:deleteBatch")
 	@DeleteMapping(value = "/deleteBatch")
 	public Result<String> deleteBatch(@RequestParam(name="ids",required=true) String ids) {
@@ -142,7 +131,7 @@ public class JackTestController extends JeecgController<JackTest, IJackTestServi
 	 * @return
 	 */
 	//@AutoLog(value = "jack desc-通过id查询")
-	@ApiOperation(value="jack desc-通过id查询", notes="jack desc-通过id查询")
+	@Operation(summary="jack desc-通过id查询", description="jack desc-通过id查询")
 	@GetMapping(value = "/queryById")
 	public Result<JackTest> queryById(@RequestParam(name="id",required=true) String id) {
 		JackTest jackTest = jackTestService.getById(id);

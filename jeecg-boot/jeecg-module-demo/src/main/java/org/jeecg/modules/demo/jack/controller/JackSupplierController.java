@@ -14,6 +14,8 @@ import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.commons.lang3.StringUtils;
 import org.jeecg.common.system.query.QueryCondition;
 import org.jeecg.common.util.DateUtils;
@@ -47,8 +49,6 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import com.alibaba.fastjson.JSON;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 
@@ -59,7 +59,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
  * @Date:   2025-04-02
  * @Version: V1.0
  */
-@Api(tags="jack supplier")
+@Tag(name="jack supplier")
 @RestController
 @RequestMapping("/jack/jackSupplier")
 @Slf4j
@@ -83,7 +83,7 @@ public class JackSupplierController {
 	 * @return
 	 */
 	//@AutoLog(value = "jack supplier-分页列表查询")
-	@ApiOperation(value="jack supplier-分页列表查询", notes="jack supplier-分页列表查询")
+	@Operation(summary="jack supplier-分页列表查询", description="jack supplier-分页列表查询")
 	@GetMapping(value = "/list")
 	public Result<IPage<JackSupplier>> queryPageList(JackSupplier jackSupplier,
 								   @RequestParam(name="pageNo", defaultValue="1") Integer pageNo,
@@ -190,7 +190,7 @@ public class JackSupplierController {
 	 * @return
 	 */
 	@AutoLog(value = "jack supplier-添加")
-	@ApiOperation(value="jack supplier-添加", notes="jack supplier-添加")
+	@Operation(summary="jack supplier-添加", description="jack supplier-添加")
     @RequiresPermissions("jack:jack_supplier:add")
 	@PostMapping(value = "/add")
 	public Result<String> add(@RequestBody JackSupplierPage jackSupplierPage) {
@@ -207,7 +207,7 @@ public class JackSupplierController {
 	 * @return
 	 */
 	@AutoLog(value = "jack supplier-编辑")
-	@ApiOperation(value="jack supplier-编辑", notes="jack supplier-编辑")
+	@Operation(summary="jack supplier-编辑", description="jack supplier-编辑")
     @RequiresPermissions("jack:jack_supplier:edit")
 	@RequestMapping(value = "/edit", method = {RequestMethod.PUT,RequestMethod.POST})
 	public Result<String> edit(@RequestBody JackSupplierPage jackSupplierPage) {
@@ -228,7 +228,7 @@ public class JackSupplierController {
 	 * @return
 	 */
 	@AutoLog(value = "jack supplier-通过id删除")
-	@ApiOperation(value="jack supplier-通过id删除", notes="jack supplier-通过id删除")
+	@Operation(summary="jack supplier-通过id删除", description="jack supplier-通过id删除")
     @RequiresPermissions("jack:jack_supplier:delete")
 	@DeleteMapping(value = "/delete")
 	public Result<String> delete(@RequestParam(name="id",required=true) String id) {
@@ -243,7 +243,7 @@ public class JackSupplierController {
 	 * @return
 	 */
 	@AutoLog(value = "jack supplier-批量删除")
-	@ApiOperation(value="jack supplier-批量删除", notes="jack supplier-批量删除")
+	@Operation(summary="jack supplier-批量删除", description="jack supplier-批量删除")
     @RequiresPermissions("jack:jack_supplier:deleteBatch")
 	@DeleteMapping(value = "/deleteBatch")
 	public Result<String> deleteBatch(@RequestParam(name="ids",required=true) String ids) {
@@ -258,7 +258,7 @@ public class JackSupplierController {
 	 * @return
 	 */
 	//@AutoLog(value = "jack supplier-通过id查询")
-	@ApiOperation(value="jack supplier-通过id查询", notes="jack supplier-通过id查询")
+	@Operation(summary="jack supplier-通过id查询", description="jack supplier-通过id查询")
 	@GetMapping(value = "/queryById")
 	public Result<JackSupplier> queryById(@RequestParam(name="id",required=true) String id) {
 		JackSupplier jackSupplier = jackSupplierService.getById(id);
@@ -276,7 +276,7 @@ public class JackSupplierController {
 	 * @return
 	 */
 	//@AutoLog(value = "jack_supplier_warehouse通过主表ID查询")
-	@ApiOperation(value="jack_supplier_warehouse主表ID查询", notes="jack_supplier_warehouse-通主表ID查询")
+	@Operation(summary="jack_supplier_warehouse主表ID查询", description="jack_supplier_warehouse-通主表ID查询")
 	@GetMapping(value = "/queryJackSupplierWarehouseByMainId")
 	public Result<List<JackSupplierWarehouse>> queryJackSupplierWarehouseListByMainId(@RequestParam(name="id",required=true) String id) {
 		String supplierName = jackSupplierService.getById(id).getSupplierName();
@@ -290,7 +290,7 @@ public class JackSupplierController {
 	 * @return
 	 */
 	//@AutoLog(value = "jack_supplier_goods通过主表ID查询")
-	@ApiOperation(value="jack_supplier_goods主表ID查询", notes="jack_supplier_goods-通主表ID查询")
+	@Operation(summary="jack_supplier_goods主表ID查询", description="jack_supplier_goods-通主表ID查询")
 	@GetMapping(value = "/queryJackSupplierGoodsByMainId")
 	public Result<List<JackSupplierGoods>> queryJackSupplierGoodsListByMainId(@RequestParam(name="id",required=true) String id) {
 		List<JackSupplierGoods> jackSupplierGoodsList = jackSupplierGoodsService.selectByMainId(id);
