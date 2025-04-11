@@ -21,6 +21,13 @@ export function demoFieldDefVal_getAddress(arg) {
   return `北京市 ${arg}`;
 }
 
+export function demoFieldDefVal_getAddress222(arg) {
+  if (!arg) {
+    arg = '朝阳区';
+  }
+  return `上海 ${arg}`;
+}
+
 /** 自定义JS函数示例 */
 export function sayHi(name) {
   if (!name) {

@@ -1,0 +1,76 @@
+{
+  "data": [
+    {
+      "title": "安徽省",
+      "value": "1",
+      "leaf": false,
+      "children": [
+        {
+          "title": "合肥市",
+          "value": "11",
+          "leaf": false,
+          "children": [
+            {
+              "title": "A区",  "value": "111", "leaf": true
+            },
+            {
+              "title": "B区",  "value": "112", "leaf": true
+            },
+            {
+              "title": "C区",  "value": "113", "leaf": true
+            }
+          ]
+        },
+        {
+          "title": "芜湖市",
+          "value": "12",
+          "leaf": false,
+          "children": [
+            {
+              "title": "D区",  "value": "121", "leaf": true
+            },
+            {
+              "title": "E区",  "value": "122", "leaf": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "河南省",
+      "value": "2",
+      "leaf": false,
+      "children": [
+        {
+          "title": "郑州市",
+          "value": "21",
+          "leaf": false,
+          "children": [
+            {
+              "title": "X区",  "value": "211", "leaf": true
+            },
+            {
+              "title": "Y区",  "value": "212", "leaf": true
+            },
+            {
+              "title": "Z区",  "value": "213", "leaf": true
+            }
+          ]
+        },
+        {
+          "title": "洛阳市",
+          "value": "22",
+          "leaf": false,
+          "children": [
+            {
+              "title": "O区",  "value": "221", "leaf": true
+            },
+            {
+              "title": "P区",  "value": "222", "leaf": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

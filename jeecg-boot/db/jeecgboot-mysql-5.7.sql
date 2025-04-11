@@ -10700,7 +10700,7 @@ INSERT INTO `wu_liao` VALUES ('1844552938199584770', 'admin', '2024-10-11 09:37:
 -- Procedure structure for insert_200_records
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `insert_200_records`;
-delimiter ;;
+delimiter $$
 CREATE PROCEDURE `insert_200_records`()
 BEGIN
     DECLARE i INT DEFAULT 1;
@@ -10712,7 +10712,16 @@ BEGIN
         SET i = i + 1;
     END WHILE;
 END
-;;
+$$
 delimiter ;
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+
+
+
+
+
+
+
+
